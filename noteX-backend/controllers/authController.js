@@ -3,16 +3,16 @@ import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import User from "../models/userModel.js";
 
 export const registerController = async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    if (!name) {
-      return res.status(400).send({ message: "Name is required" });
-    } else if (!email) {
-      return res.status(400).send({ message: "Email is required" });
-    } else if (!password) {
-      return res.status(400).send({ message: "Password is required" });
-    }
+  const { name, email, password } = req.body;
+  if (!name) {
+    return res.status(400).send({ message: "Name is required" });
+  } else if (!email) {
+    return res.status(400).send({ message: "Email is required" });
+  } else if (!password) {
+    return res.status(400).send({ message: "Password is required" });
+  }
 
+  try {
     // checking for existing user
     const user = await User.findOne({ email });
     if (user)

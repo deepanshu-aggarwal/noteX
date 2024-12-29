@@ -22,6 +22,5 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// here users refers to the actual collection in database
 const User = mongoose.model("users", userSchema);
 export default User;
