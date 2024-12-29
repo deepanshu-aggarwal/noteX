@@ -3,9 +3,12 @@ import dotenv from 'dotenv';
 import morgan from "morgan";
 import colors from "colors";
 import authRoutes from './routes/authRoutes.js';
+import noteRoutes from './routes/noteRoutes.js';
 import connectDB from './config/db.js';
+import { requireSignIn } from './middleware/authMiddleware.js';
 
 const app = express();
+const BASE_PATH = '/api/v1';
 
 // configure env
 dotenv.config();
@@ -24,7 +27,11 @@ app.get('/', (req, res) => {
 });
 
 // routes
-app.use('/api/v1/auth', authRoutes);
+app.use(`${BASE_PATH}/auth`, authRoutes);
+
+app.use(requireSignIn);
+
+app.use(`${BASE_PATH}/notes`, noteRoutes);
 
 const PORT = process.env.PORT || 8000;
 
